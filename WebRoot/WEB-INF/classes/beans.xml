@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+     xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="dataSource"
+		class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+
+	<context:property-placeholder location="classpath*:jdbc.properties" />
+
+     <!-- 配置hibernate 开始 -->
+     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!-- 配置映射文件所在位置 -->
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>classpath*:com/shxt/sys/model</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 配置hibernate 结束 -->
+    <!-- 配置事务开始 -->
+       <bean id="transactionManager"
+            class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 配置事务结束 -->
+    <!-- 事务通知 你需要告诉我的项目中哪些包中的类中的方法需要事务 -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" propagation="REQUIRED" read-only="true"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="edit*" propagation="REQUIRED"/>
+            <tx:method name="mod*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="remove*" propagation="REQUIRED"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="insert*" propagation="REQUIRED"/>
+            
+        </tx:attributes>
+    </tx:advice>
+    <!-- 使用AOP配置 -->
+    <!-- 
+                        第一个* 任意返回值
+                        第二个* 任意的类
+                        第三个* 任意的方法
+                        第四个.. 方法中的任意形参
+     -->
+    <aop:config>
+        <aop:pointcut id="productServiceMethods"
+                expression="execution(* com.shxt.sys.service.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="productServiceMethods"/>
+    </aop:config>
+    <!-- 配置BaseDaoImpl的注入 -->
+    <bean id="baseDaoImpl" class="com.shxt.base.dao.BaseDaoImpl" p:sessionFactory-ref="sessionFactory"></bean>
+    <!-- 配置BaseService的注入 -->
+	<bean id="baseService" class="com.shxt.base.service.BaseService" p:baseDao-ref="baseDaoImpl"></bean>
+	
+	<!-- *******************************************分割线********************************************************* -->
+	<!-- *******************************************权限管理配置***************************************************** -->
+   <!-- 关于菜单配置开始 -->
+   <bean id="menuServiceImpl" class="com.shxt.sys.service.MenuServiceImpl" parent="baseService"></bean>
+   <bean id="menuAction" class="com.shxt.sys.action.MenuAction" scope="prototype" p:menuService-ref="menuServiceImpl"></bean>
+    <!-- 关于菜单配置开始 -->
+   
+    <!-- 关于角色配置开始 -->
+   <bean id="roleServiceImpl" class="com.shxt.sys.service.RoleServiceImpl" parent="baseService"></bean>
+   <bean id="roleAction" class="com.shxt.sys.action.RoleAction" scope="prototype" p:roleService-ref="roleServiceImpl" p:menuService-ref="menuServiceImpl"></bean>
+    <!-- 关于角色配置开始 -->
+   
+   <!-- 关于用户配置开始 -->
+   <bean id="userServiceImpl" class="com.shxt.sys.service.UserServiceImpl" parent="baseService"></bean>
+   <bean id="loginAction" class="com.shxt.sys.action.LoginAction" scope="prototype" p:userService-ref="userServiceImpl"></bean>
+   <bean id="userAction" class="com.shxt.sys.action.UserAction" scope="prototype" p:userService-ref="userServiceImpl"></bean>
+   
+    <!-- 关于用户配置结束 -->
+   <!-- *******************************************汽车业务管理配置******************************************************** -->
+   <bean id="carTypeServiceImpl" class="com.shxt.sys.service.CarTypeServiceImpl" parent="baseService"></bean>
+   <bean id="carTypeAction" class="com.shxt.sys.action.CarTypeAction" scope="prototype" p:carTypeService-ref="carTypeServiceImpl"></bean>
+   
+   <bean id="carInfoServiceImpl" class="com.shxt.sys.service.CarInfoServiceImpl" parent="baseService"></bean>
+   <bean id="carInfoAction" class="com.shxt.sys.action.CarInfoAction" scope="prototype" p:carInfoService-ref="carInfoServiceImpl"></bean>
+   
+   <bean id="rentServiceImpl" class="com.shxt.sys.service.RentServiceImpl" parent="baseService"></bean>
+   <bean id="rentAction" class="com.shxt.sys.action.RentAction" scope="prototype" p:rentService-ref="rentServiceImpl"></bean>
+   
+   <bean id="memberTypeServiceImpl" class="com.shxt.sys.service.MemberTypeServiceImpl" parent="baseService"></bean>
+   <bean id="memberTypeAction" class="com.shxt.sys.action.MemberTypeAction" scope="prototype" p:memberTypeService-ref="memberTypeServiceImpl"></bean>
+   
+   <bean id="customerServiceImpl" class="com.shxt.sys.service.CustomerServiceImpl" parent="baseService"></bean>
+   <bean id="customerAction" class="com.shxt.sys.action.CustomerAction" scope="prototype" p:customerService-ref="customerServiceImpl"></bean>
+   <!-- ******************************************统计管理配置******************************************************** -->
+   
+   <bean id="analysisServiceImpl" class="com.shxt.sys.service.AnalysisServiceImpl" parent="baseService"></bean>
+   <bean id="analysisAction" class="com.shxt.sys.action.AnalysisAction" scope="prototype" p:analysisService-ref="analysisServiceImpl"></bean>
+   
+   
+   
+</beans> 

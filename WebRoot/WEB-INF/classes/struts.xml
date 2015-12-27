@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <!-- 修改核心配置文件不需要重启服务器 -->
+    <constant name="struts.configuration.xml.reload" value="true"></constant>
+    <!-- 配置默认后缀名 -->
+    <constant name="struts.action.extension" value="action"></constant>
+    <!-- 取消生成样式 -->
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <constant name="struts.multipart.saveDir" value="d:\temp"></constant>
+    <constant name="struts.multipart.maxSize" value="2097152"></constant>
+    <!-- 整合Spring以后的action的实例化操作，不在由Struts2管理，由spring管理 -->
+    <constant name="struts.objectFactory" value="spring"></constant>
+    <!-- 启动静态方法 -->
+    <constant name="struts.ognl.allowStaticMethodAccess" value="true"></constant>
+    
+    <package name="shxt-default" namespace="/" extends="json-default">
+        <global-results>
+            <result name="login" type="redirect">/index.jsp</result>
+            <result name="error">/WEB-INF/jsp/error.jsp</result>
+        </global-results> 
+        <!-- 
+        <global-exception-mappings>
+            <exception-mapping result="error" exception="java.lang.Exception"></exception-mapping>
+        </global-exception-mappings>
+         -->
+    </package>
+
+    <package name="sys-default" namespace="/sys" extends="shxt-default">
+    
+        <interceptors>
+            <interceptor name="sessionInterceptor" class="com.shxt.base.interceptor.SessionInterceptor"></interceptor>
+            <interceptor-stack name="sysStack">
+                <interceptor-ref name="timer"/>
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="sessionInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+    
+        <default-interceptor-ref name="sysStack"></default-interceptor-ref>
+    
+       <action name="*LoginAction" class="loginAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+       </action>
+       
+       <action name="*MenuAction" class="menuAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+        <action name="*CarTypeAction" class="carTypeAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+           <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*RoleAction" class="roleAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+           <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*UserAction" class="userAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+           <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*MemberTypeAction" class="memberTypeAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*CustomerAction" class="customerAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*AnalysisAction" class="analysisAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+       <action name="*CarInfoAction" class="carInfoAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+        <action name="*RentAction" class="rentAction" method="{1}">
+           <result name="dispatcher" type="dispatcher">/WEB-INF/${toJsp}.jsp</result>
+           <result name="redirectAction" type="redirectAction">${toAction}</result>
+            <result name="json" type="json">
+                <param name="root">jsonResult</param>
+           </result>
+       </action>
+       
+    </package>
+
+
+</struts>

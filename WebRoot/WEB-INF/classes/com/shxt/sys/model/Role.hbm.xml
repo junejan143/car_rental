@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+	<class name="Role" table="web_sys_role">
+		<id name="role_id" column="role_id" type="integer">
+			<generator class="native"/>
+		</id>
+		
+		<property name="role_name" type="string">
+			<column name="role_name" length="32" unique="true" not-null="true">
+				<comment>角色名称，不允许重复</comment>
+			</column>
+		</property>
+			
+		<property name="role_status" type="string">
+			<column name="role_status" length="1">
+				<comment>角色状态:1 代表可用  2代表禁用</comment>
+			</column>
+		</property>
+		
+		<property name="role_desc" type="string">
+			<column name="role_desc" length="128">
+				<comment>角色描述</comment>
+			</column>
+		</property>
+		
+		<property name="role_photo" type="string">
+			<column name="role_photo" length="16">
+				<comment>角色头像，默认值为role1.png,像素需要168*126</comment>
+			</column>
+		</property>
+		
+		<set name="userSet" inverse="true">
+			<comment>用户集合</comment>
+			<key column="fk_role_id"></key>
+			<one-to-many class="User"/>
+		</set>
+		
+		
+		<set name="menuSet" table="role_link_menu" >
+			<comment>菜单集合</comment>
+			<key column="fk_role_id"></key>
+			<many-to-many class="Menu" column="fk_menu_id"></many-to-many>
+		</set>
+	 	
+	</class>
+</hibernate-mapping>
