@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+    <class name="RentCar" table="web_sys_rentcar">
+        <id name="rent_id" type="integer">
+            <generator class="native"></generator>
+        </id>
+        
+        <property name="car_code" type="string" length="16" update="true" not-null="true"/>
+        <property name="deposit" type="string" length="10" />
+        <property name="rent_price" type="string" length="10" />
+        <property name="days_number" type="integer" length="5" />
+        <property name="start_date" type="date" />
+        <property name="end_date" type="date" />
+        <property name="real_date" type="date" />
+        <property name="receivable_price" type="string" length="10" />
+        <property name="real_price" type="string" length="10" />
+        <property name="rent_desc" type="string" />
+        
+        <many-to-one name="carInfo" class="CarInfo" column="fk_carinfo_id"></many-to-one>
+        
+        <many-to-one name="customer" class="Customer" column="fk_customer_id"></many-to-one>
+        
+        
+    </class>
+
+</hibernate-mapping>

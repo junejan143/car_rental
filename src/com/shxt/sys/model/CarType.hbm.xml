@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+    <class name="CarType" table="web_sys_CarType">
+        <id name="type_id" column="type_id" type="integer">
+            <generator class="native"></generator>
+        </id>
+        <property name="parent_id" type="integer">
+            <column name="parent_id" length="32">
+                <comment>父节点的ID</comment>
+            </column>
+        </property>
+        <property name="type_name" type="string">
+            <column name="type_name" not-null="true" length="32">
+                <comment>品牌的名称</comment>
+            </column>
+        </property>
+         <property name="icon" type="string">
+            <column name="icon" length="32">
+                <comment>品牌的图片</comment>
+            </column>
+        </property>
+        <property name="type_status" column="type_status" length="1" type="string"></property>
+    </class>
+
+
+
+
+</hibernate-mapping>

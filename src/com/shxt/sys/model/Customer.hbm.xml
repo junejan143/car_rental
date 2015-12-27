@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+    <class name="Customer" table="web_sys_customer">
+        <id name="cus_id" type="integer">
+            <generator class="native"></generator>
+        </id>
+        
+        <property name="cus_name" type="string" not-null="true" length="32"/>
+        <property name="cus_sex" type="string"  length="5"/>
+        <property name="cus_tel" type="string"  length="32"/>
+        <property name="cus_address" type="string" length="64"/>
+        <property name="cus_work_address" type="string" length="64"/>
+        <property name="cus_id_card" type="string" not-null="true" unique="true" length="32"/>
+        <property name="cus_driver_code" type="string" not-null="true" unique="true" length="32"/>
+        <property name="cus_status" type="string" length="2"/>
+        <property name="gua_name" type="string" not-null="true" length="32"/>
+        <property name="gua_sex" type="string" length="5"/>
+        <property name="gua_tel" type="string" length="32"/>
+        <property name="gua_id_card" type="string" not-null="true" unique="true" length="32"/>
+        <property name="gua_address" type="string" length="64"/>
+        <property name="gua_work_address" type="string" length="64"/>
+        <property name="relation" type="string" not-null="true" length="64"/>
+        <property name="verify" type="string"  length="2"/>
+        
+        
+        <many-to-one name="memberType" class="MemberType" column="fk_member_id"></many-to-one>
+        
+    </class>
+</hibernate-mapping>

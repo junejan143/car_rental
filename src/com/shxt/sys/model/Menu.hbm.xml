@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+	<class name="Menu" table="web_sys_menu">
+		<id name="menu_id" column="menu_id" type="integer">
+			<generator class="native"></generator>
+		</id>
+		
+		<!-- 不允许重复 -->
+		<property name="menu_name"  type="string">
+			<column name="menu_name" not-null="true" length="32">
+				<comment>在同一级别不允许重复</comment>
+			</column>
+		</property>
+		
+		<property name="url"   type="string">
+			<column name="url" length="100">
+				<comment>访问路径</comment>
+			</column>
+		</property>
+		
+		<property name="parent_id"  type="string">
+			<column name="parent_id" length="32">
+				<comment>父节点ID,如果是根节点为NULl</comment>
+			</column>
+		</property>
+		
+		<property name="target" type="string">
+			<column name="target" length="32">
+				<comment>对应超链接的target属性值，默认值为rightFrame</comment>
+			</column>
+		</property>
+		
+		<property name="icon" type="string" >
+			<column name="icon" length="32">
+				<comment>给节点设置图标，该功能暂缺</comment>
+			</column>
+		</property>
+		
+		<property name="postion" type="string" >
+			<column name="postion" length="32">
+				<comment>菜单显示的位置，默认值为LEFT</comment>
+			</column>
+		</property>
+		
+		<set name="roleSet" table="role_link_menu">
+			<comment>角色集合</comment>
+			<key column="fk_menu_id"></key>
+			<many-to-many class="Role" column="fk_role_id"></many-to-many>
+		</set>
+	
+		
+		
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.shxt.sys.model">
+    <class name="CarInfo" table="web_sys_carinfo">
+        <id name="car_id" type="integer">
+            <generator class="native"></generator>
+        </id>
+        
+        <property name="car_code" type="string" update="true" not-null="true" length="16"/>
+        <property name="car_name" type="string" length="16" />
+        <property name="car_color" type="string" length="32"/>
+        <property name="car_desc" type="string" length="64" />
+        <property name="rent_price" type="string" length="10"/>
+        <property name="buy_price" type="string" length="16"/>
+        <property name="deposit" type="string" length="10"/>
+        <property name="km" type="string" length="16"/>
+        <property name="create_user_name" type="string" length="16"/>
+        <property name="car_status" type="string" length="2"/>
+        <property name="reserve_date" type="date" />
+        <property name="reserve_user_name" type="string" length="16"/>
+        <property name="reserve_tel" type="string" length="16"/>
+        <property name="photo" type="string" />
+    
+        <many-to-one name="carType" class="CarType" column="fk_cartype_id"></many-to-one>
+        
+    </class>
+
+</hibernate-mapping>
