@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Struts2Diagram version="2.0">
+  <package name="shxt-default" location="0,0" size="0,0" />
+  <package name="sys-default" location="0,0" size="0,0">
+    <action name="*LoginAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+    </action>
+    <action name="*MenuAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*CarTypeAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*RoleAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*UserAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*MemberTypeAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*CustomerAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*AnalysisAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*CarInfoAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+    <action name="*RentAction" location="0,0" size="0,0">
+      <result name="dispatcher">
+        <resourceEdge source="dispatcher" routing="0" target="${toJsp}.jsp" />
+      </result>
+      <result name="redirectAction" />
+      <result name="json" />
+    </action>
+  </package>
+  <webResource name="success.jsp" path="/WEB-INF/success.jsp" location="0,0" size="0,0" />
+  <webResource name="${toJsp}.jsp" path="/WEB-INF/${toJsp}.jsp" location="0,0" size="0,0" />
+  <extendsEdge source="sys-default" target="shxt-default" routing="0" />
+</Struts2Diagram>
+
